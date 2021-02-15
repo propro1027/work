@@ -6,7 +6,8 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
        log_in(user) #ヘルパーメソッドに飛ぶ
-       remember(user)
+      # remember(user)
+      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
        redirect_to(user)#ユーザー情報ページに飛ぶ
     else
       # layouts/application.html.erbで場合わけのカーラー

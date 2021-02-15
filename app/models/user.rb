@@ -38,11 +38,11 @@ class User < ApplicationRecord
   
    # トークンがダイジェストと一致すればtrueを返します
   # cookiesに保存されているremember_tokenがデータベースにあるremember_digestと一致することを確認します。（トークン認証）
-  def authenticated?
-     # ダイジェストが存在しない場合はfalseを返して終了します。
-    return false if remember.nil?
-    BCrypt::Password.new(remember).is_password?(remember_token)
-  end
+ def authenticated?(remember_token)
+  # ダイジェストが存在しない場合はfalseを返して終了します。
+  return false if remember_digest.nil?
+  BCrypt::Password.new(remember_digest).is_password?(remember_token)
+ end
   
   
   # ユーザーのログイン情報を破棄します。
