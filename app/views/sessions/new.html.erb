@@ -1,0 +1,22 @@
+<h1>ログイン</h1>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    
+    <!--リソース名（session）と対応するルーティングを具体的に指定する-->
+   <%=form_with(scope: :session, url: login_path, local: true) do |f|%>
+    <!--<=render 'shared/error'%>-->
+      
+      <%= f.label :email, class: "label-signup" %>
+      <%= f.email_field :email, class: "form-control" %>
+      
+      <%= f.label :password, class: "label-signup" %>
+      <%= f.password_field :password, class: "form-control" %>
+
+      <%= f.submit "log in", class: "btn btn-primary btn-block btn-signup" %>
+      
+      <p>アカウント作成は<%=link_to "こちら",new_path %>から</p>
+      
+      
+    <% end %>
+  </div>
+</div>

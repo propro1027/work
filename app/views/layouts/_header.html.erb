@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <header class="navbar navbar-fixed-top navbar-inverse">
+      <div class="header">
+        <%= link_to "勤怠システム", root_path, id: "logo" %>
+        
+        <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to "Top",root_path %></li>
+          <% if loged_in? %>
+            <!--ドロップダウン機能を有効化するため、Railsのapplication.jsファイルを修正し,-->
+            <!--Bootstrapに同梱されているJavaScriptライブラリとjQueryを読み込むようアセットパイプラインに指示-->
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Account <b class="caret"></b>
+            </a>
+            
+            <ul class="dropdown-menu">
+              <li><%= link_to "Show", cuurent_user %></li>
+              <li><%= link_to "Settings", '#' %></li>
+              <li class="divider"></li>
+              <!--ログアウト処理はHTTPリクエストがDELETEで引数にmethod: :deleteというハッシュを渡しています。-->
+              <li><%= link_to "Log out", logout_path, method: :delete %></li>
+            </ul>
+          </li>
+          <% else %>
+               <li><%= link_to "Log in", login_path %></li>
+          <% end %>
+        </ul>
+      </div>
+    </header>
+  </body>
+</html>
+
+
+

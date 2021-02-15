@@ -13,3 +13,7 @@
 //= require rails-ujs
 //= require turbolinks
 //= require_tree .
+
+// 追加　dropdown用
+//= require jquery
+//= require bootstrap

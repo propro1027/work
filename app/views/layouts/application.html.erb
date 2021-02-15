@@ -3,12 +3,16 @@
   <head>
     <title>Work</title>
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
+  <%= render 'layouts/header' %>
   <body>
+     <% flash.each do |message_type, msg| %>
+     <div class="alert alert-<%= message_type %>"><%= msg %></div>
+     <% end %>
+     
     <%= yield %>
   </body>
+  <%= render 'layouts/footer' %>
 </html>

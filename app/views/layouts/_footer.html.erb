@@ -1,0 +1,11 @@
+<body>
+<div>
+  <h2>The Ruby on Rails Tutorial by Michael Heats</h2>
+  <div class="under_top">
+    <%=link_to "About",'#'%>
+    <%=link_to "Contact",'#'%>
+    <%=link_to "News",'#'%>
+  <div class="debug_dump">
+      <%= debug(params) if Rails.env.development? %>
+    </div>
+</body>
