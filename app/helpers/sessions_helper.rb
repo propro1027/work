@@ -10,7 +10,23 @@ module SessionsHelper
      session[:user_id] = user.id# .idだからuser ID??
   end
   
+   # 永続的セッションを記憶（Userモデルを参照） 
+  def remember(user)
+    user.remember
+    # cookiesをブラウザに保存する前に署名付きで安全に暗号化する
+    cookies.permanent.signed[:user_id] = user.id
+    cookies.permanent.signed[:remember_token] = user.remember_token
+  end
+
+
+  # 永続的セッションを破棄します
+  def forget(user)
+    user.forget # Userモデル参照
+    cookies.delete(:user_id)
+    cookies.delete(:remember_token)
+  end
   
+
   # セッションと@current_userを破棄します
   def log_out
     session.delete(:user_id)
@@ -19,22 +35,28 @@ module SessionsHelper
   
   
   # ユーザーIDを別のページで安全に取り出すためのメソッド  「現在ログインしているユーザー」の値を取得できる
-  def cuurent_user
-    # 現在ログイン中のユーザーがいる場合オブジェクトを返します。
-    if session[:user_id]
-      @current_user ||= User.find_by(id: session[:user_id])
+  # 現在ログイン中のユーザーがいる場合オブジェクトを返します。
+   # 一時的セッションにいるユーザーを返します。
+  # それ以外の場合はcookiesに対応するユーザーを返します。
+  def current_user
+    if (user_id = session[:user_id])
+      @current_user ||= User.find_by(id: user_id)
+    elsif (user_id = cookies.signed[:user_id])
+      user = User.find_by(id: user_id)
+      if user && user.authenticated?(cookies[:remember_token])
+        log_in user
+        @current_user = user
+      end
     end
   end
-  
   
    # 現在ログイン中のユーザーがいればtrue、そうでなければfalseを返します。
   def loged_in?
     # ログイン中のidは空っぽでなないよね？つまり、いるよね？
-    !cuurent_user.nil?
+    !current_user.nil?
   end
 
-
-
+ 
 
 
 
