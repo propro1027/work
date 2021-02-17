@@ -10,7 +10,7 @@ class UsersController < ApplicationController
      @user = User.new # 新規ユーザー作成画面
   end
   
-  # 新規ユーザー作成後の個人画面
+    # 新規ユーザー作成後の個人画面
   def create
     @user = User.new(key)
     # リダイレクトしてユーザー情報ページへ遷移する。
@@ -22,6 +22,10 @@ class UsersController < ApplicationController
     else
       render:new
     end
+  end
+  
+  def edit 
+    @user = User.find(params[:id])
   end
   
   # params_userメソッドはUsersコントローラーの内部でのみ実行
