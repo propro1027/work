@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
   
   # 指定のアクションが実行される直前に走るプログラムを記述することができます
-  before_action :set_user, only: [:show, :edit, :update]
-  before_action :logged_in_user, only: [:show, :edit, :update]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :logged_in_user, only: [:show, :edit, :update, :destroy]
   before_action :correct_user, only: [:edit, :update]
+  before_action :owner_account, only: :destroy
   
   
   # ユーザー一覧　インスタンス変数名は全てのユーザーを代入した複数形であるため@usersとしています。
@@ -50,7 +51,12 @@ class UsersController < ApplicationController
      else
        render:edit
      end
+  end
   
+  def destroy
+    @user.destroy
+    flash[:success] = "#{@user.name}のデータを削除しました。"
+    redirect_to users_url
   end
   
   
@@ -89,6 +95,11 @@ class UsersController < ApplicationController
      # アクセスしたユーザーが現在ログインしているユーザーか確認します。
     def correct_user
       redirect_to(root_url) unless current_user?(@user)
+    end
+    
+     # システム管理権限所有かどうか判定。
+    def owner_account
+      redirect_to root_url unless current_user.owner?
     end
     
     
