@@ -4,6 +4,10 @@ gem 'rails',        '~> 5.1.6'
 # bootstrap
 gem 'bootstrap-sass'
 
+gem 'faker'
+
+gem 'will_paginate' 
+
 gem 'bcrypt' # パスワードハッシュ化
 gem 'puma',         '~> 3.7'
 gem 'sass-rails',   '~> 5.0'

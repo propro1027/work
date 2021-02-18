@@ -6,6 +6,7 @@
         <%= link_to "勤怠システム", root_path, id: "logo" %>
         
         <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to "Users", users_path %></li>
           <li><%= link_to "Top",root_path %></li>
           <% if loged_in? %>
             <!--ドロップダウン機能を有効化するため、Railsのapplication.jsファイルを修正し,-->

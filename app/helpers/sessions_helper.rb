@@ -50,14 +50,34 @@ module SessionsHelper
     end
   end
   
+  
+   # 渡されたユーザーがログイン済みのユーザーであればtrueを返します。
+  # 引数userは今ログイン中のユーザー？イェsなら＝＝
+  def current_user?(user)
+    user == current_user
+  end
+  
    # 現在ログイン中のユーザーがいればtrue、そうでなければfalseを返します。
   def loged_in?
     # ログイン中のidは空っぽでなないよね？つまり、いるよね？
     !current_user.nil?
   end
-
- 
-
-
+  
+  
+  
+  # freindly forwading
+   # 記憶しているURL(またはデフォルトURL)にリダイレクトします。
+  def redirect_back(default_url)
+    # session[:forwarding_url]がnilではなければその値を使い、nilなら右側のdefault_urlの値をリダイレクト先の引数として使います。
+    redirect_to(session[:forwarding_url] || default_url)
+    session.delete(:forwarding_url)
+  end
+  
+   # アクセスしようとしたURLを記憶します。
+   #session helper log_inと同じ一時的セッションであるsessionハッシュを使う
+  def store_location
+    session[:forwarding_url] = request.original_url if request.et?
+  end
+  
 
 end

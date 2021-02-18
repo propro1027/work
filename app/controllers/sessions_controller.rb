@@ -8,7 +8,8 @@ class SessionsController < ApplicationController
        log_in(user) #ヘルパーメソッドに飛ぶ
       # remember(user)
       params[:session][:remember_me] == '1' ? remember(user) : forget(user)
-       redirect_to(user)#ユーザー情報ページに飛ぶ
+      # redirect_to(user)#ユーザー情報ページに飛ぶ
+       redirect_back user
     else
       # layouts/application.html.erbで場合わけのカーラー
      flash.now[:danger] = '認証に失敗しました。'
