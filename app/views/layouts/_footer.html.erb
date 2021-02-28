@@ -1,11 +1,24 @@
-<body>
-<div>
-  <h2>The Ruby on Rails Tutorial by Michael Heats</h2>
-  <div class="under_top">
-    <%=link_to "About",'#'%>
-    <%=link_to "Contact",'#'%>
-    <%=link_to "News",'#'%>
+<!--<body>-->
+  <!--ボーダライン-->
+ 
+     <div class="line">
+     <tr>
+      <div class="footer_left">
+        <td>The Ruby on Rails Tutorial by Michael Heats</td>
+      </div>
+      <div class="footer_right">
+         <td>about</td>
+         <td>contact</td>
+         <td>news</td>
+      </div>
+    </tr>
+   </div>
+ 
+ 
+   
   <div class="debug_dump">
       <%= debug(params) if Rails.env.development? %>
     </div>
-</body>
+ 
+   
+<!--</body>-->

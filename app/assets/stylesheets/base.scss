@@ -1,0 +1,96 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+//first display/////////////////////////
+.center{
+  text-align:center;
+  background-color: #DDDDDD;
+  // 縦幅調整
+  padding:70px;
+  width : 1000px ;  
+  height : 300px ;
+  
+  // boxの位置調整
+  margin-right: auto;
+  margin-left : auto;
+}
+//////////////////////////////////////////////
+
+
+// 上からの位置
+body {
+  padding-top: 100px;
+}
+
+h1{
+  // font-weight: bold;
+  text-align:center;
+  font-size: 50px;
+}
+
+h2{
+  // font-weight: bold;
+  font-size:medium;
+}
+
+
+/* フッター */////////////////////////////////////////////////////////////////
+// ボーダライン
+.line{
+  border-top-style: solid;
+  border-top-width: thin;
+  border-top-color: #666666;
+}
+
+.footer_left{
+// ボックスを左側に寄せ、右側に後続の内容を回り込ませます。
+  float:left;
+  text-align:left;
+}
+
+.footer_right{
+  // ボックスを左側に寄せ、右側に後続の内容を回り込ませます。
+  text-align:right;
+}
+////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+#logo {
+  // logo indent
+  text-indent: 50px;
+  
+  float: left ;
+  margin-right: 10px;
+  font-size: 1.7em;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 9px;
+  font-weight: bold;
+}
+
+
+
+/* debug */////////////////////////
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  -moz-box-sizing:    border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing:         border-box;
+  text-align:left;
+}
+/////////////////////////////////////////////////
+
+
+
+//* モーダルウインドウの位置調整 */
+
+.modal-dialog-center {
+  padding-top: 10%;
+}

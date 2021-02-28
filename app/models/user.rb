@@ -12,7 +12,19 @@ class User < ApplicationRecord
   
   # passwordとpassword_confirmationを入力している場合はそれらも更新」「どちらも入力していない場合はパスワードの検証のみをスルーして更新」  allow_nil: true
   validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
-  validates :belong, presence: true
+  # validates :belong, presence: true
+  
+  
+  # 所属  空の状態で送信し、2文字上の検証に引っかからないようにするため
+  validates :department, presence: true,length: { in: 2..30 }, allow_blank: true
+  
+  # 基本時間
+  validates :basic_time, presence: true
+  # 勤務時間
+  validates :work_time, presence: true
+  
+  # 関連する勤怠データも同時に自動で削除されるよう設定
+   has_many :attendances, dependent: :destroy
   
   # トークン作成-------------------------
   # 渡された文字列のハッシュ値を返します。

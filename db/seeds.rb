@@ -11,7 +11,7 @@
 
 User.create!(name: "Sample User",
              email: "sample@email.com",
-             belong: "AAA",
+             department: "AAA",
              password: "password",
              password_confirmation: "password",
              owner: true)
@@ -19,11 +19,11 @@ User.create!(name: "Sample User",
  50.times do |n|
   name  = Faker::Name.name
   email = "sample-#{n+1}@email.com"
-  belong = "AAA"
+  department = "AAA"
   password = "password"
   User.create!(name: name,
                email: email,
-               belong: belong,
+               department: department,
                password: password,
                password_confirmation: password)
 end

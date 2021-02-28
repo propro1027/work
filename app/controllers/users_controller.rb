@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
   
   # 指定のアクションが実行される直前に走るプログラムを記述することができます
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :logged_in_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   before_action :correct_user, only: [:edit, :update]
-  before_action :owner_account, only: :destroy
+  before_action :owner_account, only: [:destroy, :edit_basic_info, :update_basic_info]
+  before_action :set_one_month,only: :show
   
   
   # ユーザー一覧　インスタンス変数名は全てのユーザーを代入した複数形であるため@usersとしています。
@@ -14,10 +15,11 @@ class UsersController < ApplicationController
     @users = User.paginate(page: params[:page])
   end
   
-  
+  # 当日を取得するためDate.currentをこれにRailsのメソッドであるbeginning_of_monthを繋げ当月の初日を取得
   def show
-    # ユーザーid取得でparams
-    # @user = User.find(params[:id])   before_actionで事前に走らせているので省略
+    @first_day = Date.current.beginning_of_month
+    @last_day = @first_day.end_of_month
+    @worked_sum = @attendances.where.not(started_at: nil).count
   end
 
   def new
@@ -59,12 +61,24 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
   
+  def edit_basic_info
+  end
+
+  def update_basic_info
+    if @user.update_attributes(basic_info_params)
+      flash[:success] = "#{@user.name}の基本情報を更新しました。"
+    else
+      flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
+    end
+    redirect_to users_url
+  end
+  
   
   # params_userメソッドはUsersコントローラーの内部でのみ実行
   private
     def key
       #:userキー
-      params.require(:user).permit(:name, :email, :belong, :password, :password_confimation)
+      params.require(:user).permit(:name, :email, :department, :password, :password_confimation)
     end
 
 # beforeフィルター
