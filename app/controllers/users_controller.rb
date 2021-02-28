@@ -80,41 +80,45 @@ class UsersController < ApplicationController
       #:userキー
       params.require(:user).permit(:name, :email, :department, :password, :password_confimation)
     end
+    
+    def basic_info_params
+      params.require(:user).permit(:department, :basic_time, :work_time)
+    end
 
-# beforeフィルター
-# 以下セキュリティーモデル
+# # beforeフィルター
+# # 以下セキュリティーモデル
 
-# paramsハッシュからユーザーを取得します。
-    def set_user
-      @user = User.find(params[:id])
-    end
+# # paramsハッシュからユーザーを取得します。
+#     def set_user
+#       @user = User.find(params[:id])
+#     end
     
-    # 1 ログイン済みのユーザーか確認します。まずは「ユーザーにログインを要求する」セキュリティモデルを追加
-    def logged_in_user
-    # sessinon helper
-     unless loged_in?
-       store_location
-       flash[:danger] = "ログインしてください。"
-       redirect_to login_url
-     end
-    end
+#     # 1 ログイン済みのユーザーか確認します。まずは「ユーザーにログインを要求する」セキュリティモデルを追加
+#     def logged_in_user
+#     # sessinon helper
+#     unless loged_in?
+#       store_location
+#       flash[:danger] = "ログインしてください。"
+#       redirect_to login_url
+#     end
+#     end
     
-    # # 2 ユーザー自身のみが情報を編集・更新可能
-    # def correct_user
-    #   # アクセスしたユーザーを判定
-    #   @user = User.find(params[:id])
-    #   redirect_to(root_url) unless @user == current_user
-    # end
+#     # # 2 ユーザー自身のみが情報を編集・更新可能
+#     # def correct_user
+#     #   # アクセスしたユーザーを判定
+#     #   @user = User.find(params[:id])
+#     #   redirect_to(root_url) unless @user == current_user
+#     # end
     
-     # アクセスしたユーザーが現在ログインしているユーザーか確認します。
-    def correct_user
-      redirect_to(root_url) unless current_user?(@user)
-    end
+#     # アクセスしたユーザーが現在ログインしているユーザーか確認します。
+#     def correct_user
+#       redirect_to(root_url) unless current_user?(@user)
+#     end
     
-     # システム管理権限所有かどうか判定。
-    def owner_account
-      redirect_to root_url unless current_user.owner?
-    end
+#     # システム管理権限所有かどうか判定。
+#     def owner_account
+#       redirect_to root_url unless current_user.owner?
+#     end
     
     
 end

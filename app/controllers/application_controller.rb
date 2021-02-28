@@ -11,6 +11,45 @@ class ApplicationController < ActionController::Base
   $days_of_the_week = %w{日 月 火 水 木 金 土}
   
   
+  # beforeフィルター
+# 以下セキュリティーモデル
+
+# paramsハッシュからユーザーを取得します。
+    def set_user
+      @user = User.find(params[:id])
+    end
+    
+    # 1 ログイン済みのユーザーか確認します。まずは「ユーザーにログインを要求する」セキュリティモデルを追加
+    def logged_in_user
+    # sessinon helper
+    unless loged_in?
+      store_location
+      flash[:danger] = "ログインしてください。"
+      redirect_to login_url
+    end
+    end
+    
+    # # 2 ユーザー自身のみが情報を編集・更新可能
+    # def correct_user
+    #   # アクセスしたユーザーを判定
+    #   @user = User.find(params[:id])
+    #   redirect_to(root_url) unless @user == current_user
+    # end
+    
+    # アクセスしたユーザーが現在ログインしているユーザーか確認します。
+    def correct_user
+      redirect_to(root_url) unless current_user?(@user)
+    end
+    
+    # システム管理権限所有かどうか判定。
+    def owner_account
+      redirect_to root_url unless current_user.owner?
+    end
+  
+  
+  
+  
+  
    # ページ出力前に1ヶ月分のデータの存在を確認・セットします。
   def set_one_month 
     @first_day = params[:date].nil? ? Date.current.beginning_of_month : params[:date].to_date
