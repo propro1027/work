@@ -8,8 +8,8 @@ class ApplicationController < ActionController::Base
 # %w{日 月 火 水 木 金 土}はRubyのリテラル表記と呼ばれるものです。
 # ["日", "月", "火", "水", "木", "金", "土"]の配列と同じように使えます。
 # ご覧の通り、"の記述が不要なので記述がとてもシンプルに済みますね。
+
   $days_of_the_week = %w{日 月 火 水 木 金 土}
-  
   
   # beforeフィルター
 # 以下セキュリティーモデル

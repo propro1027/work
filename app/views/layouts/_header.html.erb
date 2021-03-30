@@ -7,9 +7,11 @@
         
         <ul class="nav navbar-nav navbar-right">
           <li><%= link_to "トップへ",root_path %></li>
-          <% if loged_in? %>
-          <li><%= link_to "ユーザ一覧", users_path %></li>
-          <li><%= link_to "基本情報の修正", '#' %></li>
+          <% if loged_in?%>
+          <% if current_user.owner %>
+            <li><%= link_to "ユーザ一覧", users_path %></li>
+            <li><%= link_to "基本情報の修正", '#' %></li>
+          <%end%>
             <!--ドロップダウン機能を有効化するため、Railsのapplication.jsファイルを修正し,-->
             <!--Bootstrapに同梱されているJavaScriptライブラリとjQueryを読み込むようアセットパイプラインに指示-->
           <li class="dropdown">

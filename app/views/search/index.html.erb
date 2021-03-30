@@ -1,16 +1,7 @@
-<h1>ユーザ一覧</h1>
+<h1>検索結果</h1>
 <body>
-<%= will_paginate %>
+<!--%= will_paginate @users%>-->
 
-  <!--  検索拡張機能  -->
-
-<!--  <p>ユーザ名検索</p>-->
-<!--  form_tag(rootpath名, method: HTTPメソッド) do  end %>-->
-<!--%=form_tag(search_path,method: :get) do%>-->
-<!--%= text_field(@users, :keyword)%>-->
-<!--%= submit_tag "検索" %>-->
-<!--%end%>-->
-<!--  検索拡張機能  -->
 <div class="search">
   <p>ユーザ検索</p>
 <%= form_tag(search_path, :method => 'get' ) do %>
@@ -19,10 +10,6 @@
 <% end %>
 </div>
 
-
-<!--<ul class="users">-->
-<!--  %= render @users %>-->
-<!--</ul>-->
 
 
 

@@ -7,18 +7,22 @@ class UsersController < ApplicationController
   before_action :owner_account, only: [:destroy, :edit_basic_info, :update_basic_info]
   before_action :set_one_month,only: :show
   
+ 
+  
   
   # ユーザー一覧　インスタンス変数名は全てのユーザーを代入した複数形であるため@usersとしています。
   def index
     # @users = User.all
     # ページネーション対応
-    @users = User.paginate(page: params[:page])
+     @users = User.paginate(page: params[:page])
   end
+  
   
   # 当日を取得するためDate.currentをこれにRailsのメソッドであるbeginning_of_monthを繋げ当月の初日を取得
   def show
-    @first_day = Date.current.beginning_of_month
-    @last_day = @first_day.end_of_month
+    # @first_day = Date.current.beginning_of_month
+    # @last_day = @first_day.end_of_month
+    # 前月後月ボタン反映
     @worked_sum = @attendances.where.not(started_at: nil).count
   end
 
@@ -65,16 +69,16 @@ class UsersController < ApplicationController
   end
 
   def update_basic_info
-    if @user.update_attributes(basic_info_params)
-      flash[:success] = "#{@user.name}の基本情報を更新しました。"
-    else
-      flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
-    end
-    redirect_to users_url
+  if @user.update_attributes(basic_info_params)
+    flash[:success] = "#{@user.name}の基本情報を更新しました。"
+  else
+    flash[:danger] = "#{@user.name}の更新は失敗しました。<br>" + @user.errors.full_messages.join("<br>")
+  end
+  redirect_to users_url
   end
   
   
-  # params_userメソッドはUsersコントローラーの内部でのみ実行
+  # params_userメソッドはUsersコント���ーラーの内部でのみ実行
   private
     def key
       #:userキー
@@ -84,41 +88,4 @@ class UsersController < ApplicationController
     def basic_info_params
       params.require(:user).permit(:department, :basic_time, :work_time)
     end
-
-# # beforeフィルター
-# # 以下セキュリティーモデル
-
-# # paramsハッシュからユーザーを取得します。
-#     def set_user
-#       @user = User.find(params[:id])
-#     end
-    
-#     # 1 ログイン済みのユーザーか確認します。まずは「ユーザーにログインを要求する」セキュリティモデルを追加
-#     def logged_in_user
-#     # sessinon helper
-#     unless loged_in?
-#       store_location
-#       flash[:danger] = "ログインしてください。"
-#       redirect_to login_url
-#     end
-#     end
-    
-#     # # 2 ユーザー自身のみが情報を編集・更新可能
-#     # def correct_user
-#     #   # アクセスしたユーザーを判定
-#     #   @user = User.find(params[:id])
-#     #   redirect_to(root_url) unless @user == current_user
-#     # end
-    
-#     # アクセスしたユーザーが現在ログインしているユーザーか確認します。
-#     def correct_user
-#       redirect_to(root_url) unless current_user?(@user)
-#     end
-    
-#     # システム管理権限所有かどうか判定。
-#     def owner_account
-#       redirect_to root_url unless current_user.owner?
-#     end
-    
-    
 end

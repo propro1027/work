@@ -15,27 +15,55 @@
       </tr>
     </thead>
     <tbody>
+    
     <% @attendances.each do |day| %>
           <%= f.fields_for "attendances[]", day do |attendance| %>
             <tr>
               <td><%= l(day.worked_on, format: :short) %></td>
+              <!--<td>%= $days_of_the_week[day.worked_on.wday] %></td>-->
+              
+          <!--土日カラーリング-->
+          <% if $days_of_the_week[day.worked_on.wday]=="日" %>
+              <td class="sun"><%= $days_of_the_week[day.worked_on.wday] %></td>
+          <% elsif $days_of_the_week[day.worked_on.wday]=="土" %>
+              <td class="sat"><%= $days_of_the_week[day.worked_on.wday] %></td>
+          <% else %>
               <td><%= $days_of_the_week[day.worked_on.wday] %></td>
-              <% if !current_user.owner? && (Date.current < day.worked_on) %>
-        <td><%= attendance.time_field :started_at, readonly: true, class: "form-control" %></td>
-        <td><%= attendance.time_field :finished_at, readonly: true, class: "form-control" %></td>
-      <% else %>
-        <td><%= attendance.time_field :started_at, class: "form-control" %></td>
-        <td><%= attendance.time_field :finished_at, class: "form-control" %></td>
-      <% end %>
-              <td>
-                <% if day.started_at.present? && day.finished_at.present? %>
-                  <%= working_times(day.started_at, day.finished_at) %>
+          <%end%>
+             
+              <!--今日までの勤怠編集可-->
+              <% if Date.current >= day.worked_on %>
+              
+                <% if !current_user.owner?  %>
+                  <td><%= attendance.time_field :started_at,  class: "form-control" %></td>
+                  <td><%= attendance.time_field :finished_at, class: "form-control" %></td>
+                <% else %>
+                  <td><%= attendance.time_field :started_at, class: "form-control" %></td>
+                  <td><%= attendance.time_field :finished_at, class: "form-control" %></td>
                 <% end %>
-              </td>
-              <td><%= attendance.text_field :note, class: "form-control" %></td>
+                
+                <% if day.started_at.present? && day.finished_at.present? %>
+                  <td><%= working_times(day.started_at, day.finished_at) %></td>
+                <%else%>
+                  <td></td>
+                <% end %>
+                
+                <% if !current_user.owner?%>
+                  <td><%= attendance.text_field :note, class: "form-control" %></td>
+                <% else %>
+                  <td><%= attendance.text_field :note, class: "form-control" %></td>
+                <% end %>
+              
+              <!--今日以降の勤怠編集不可  readonly: trueで入力不可の制約-->
+              <%else%>
+                <td><%= attendance.time_field :started_at, readonly: true, class: "form-control" %></td>
+                <td><%= attendance.time_field :finished_at, readonly: true, class: "form-control" %></td>
+                <td></td>
+                <td><%= attendance.text_field :note,readonly: true, class: "form-control" %></td>
+             <% end %>
             </tr>
-          <% end %>
         <% end %>
+     <% end %>
       </tbody>
     </table>
   </div>
@@ -44,3 +72,31 @@
 <%= f.submit "編集を保存", class: "btn btn-lg btn-primary" %>
 
  <% end %>
+ 
+ 
+  <!--% if !current_user.owner? && (Date.current < day.worked_on) %>-->
+  <!--              <td>%= attendance.time_field :started_at, readonly: true, class: "form-control" %></td>-->
+  <!--              <td>%= attendance.time_field :finished_at, readonly: true, class: "form-control" %></td>-->
+                
+  <!--            % else %>-->
+  <!--              <td>%= attendance.time_field :started_at, class: "form-control" %></td>-->
+  <!--              <td>%= attendance.time_field :finished_at, class: "form-control" %></td>-->
+  <!--            % end %>-->
+                
+              
+  <!--              % if day.started_at.present? && day.finished_at.present? %>-->
+  <!--                <td>%= working_times(day.started_at, day.finished_at) %></td>-->
+  <!--              %else%>-->
+  <!--                <td></td>-->
+  <!--              % end %>-->
+  <!--           % if !current_user.owner? && (Date.current >= day.worked_on) %>-->
+  <!--            <td>%= attendance.text_field :note,readonly: true, class: "form-control" %></td>-->
+  <!--            % else %>-->
+  <!--            <td>%= attendance.text_field :note, class: "form-control" %></td>-->
+  <!--            < end %>-->
+  <!--          </tr>-->
+  <!--        < end %>-->
+  <!--      % end %>-->
+  <!--   % end %>-->
+  <!--    </tbody>-->
+  <!--  </table>-->

@@ -26,6 +26,12 @@ class User < ApplicationRecord
   # 関連する勤怠データも同時に自動で削除されるよう設定
    has_many :attendances, dependent: :destroy
   
+  
+    
+  
+  
+  
+  
   # トークン作成-------------------------
   # 渡された文字列のハッシュ値を返します。
   def User.digest(string)
@@ -65,5 +71,22 @@ class User < ApplicationRecord
   def forget
     update_attribute(:remember_digest, nil)
   end
+  
+  # # 検索
+  #   def User.search(search)
+  #     if search
+  #       User.where(['name LIKE ?', "%#{keyword}%"])
+  #     else
+  #       User.all
+  #     end
+  #   end
+
+def self.look(keyword) #ここでのself.はUser.を意味する
+    where(['name LIKE ?', "%#{keyword}%"]) #検索とnameの部分一致を表示。User.は省略
+ 
+end
+  
+
 
 end
+
