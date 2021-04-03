@@ -20,6 +20,14 @@ test:
   <<: *default
   database: db/test.sqlite3
 
-production:
-  <<: *default
-  database: db/production.sqlite3
+# 元々
+# production:
+#   <<: *default
+#   database: db/production.sqlite3
+  
+  # add
+  production:
+    :*default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
