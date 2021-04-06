@@ -72,14 +72,7 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)
   end
   
-  # # 検索
-  #   def User.search(search)
-  #     if search
-  #       User.where(['name LIKE ?', "%#{keyword}%"])
-  #     else
-  #       User.all
-  #     end
-  #   end
+  
 
 def self.look(keyword) #ここでのself.はUser.を意味する
     where(['name LIKE ?', "%#{keyword}%"]) #検索とnameの部分一致を表示。User.は省略

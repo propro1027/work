@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   # 指定のアクションが実行される直前に走るプログラムを記述することができます
   before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
-  before_action :correct_user, only: [:edit, :update]
+  before_action :correct_user, only: [:edit, :update,:show]
   before_action :owner_account, only: [:destroy, :edit_basic_info, :update_basic_info]
   before_action :set_one_month,only: :show
   
@@ -23,6 +23,7 @@ class UsersController < ApplicationController
     # @first_day = Date.current.beginning_of_month
     # @last_day = @first_day.end_of_month
     # 前月後月ボタン反映
+    @users = User.find(params[:id])
     @worked_sum = @attendances.where.not(started_at: nil).count
   end
 
