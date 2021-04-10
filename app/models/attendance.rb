@@ -12,13 +12,28 @@ class Attendance < ApplicationRecord
   # 出勤・退勤時間どちらも存在する時、出勤時間より早い退勤時間は無効
   validate :started_at_than_finished_at_fast_if_invalid
   
-  # validate :no_touch
   
   
+  # add
+  # 出勤のみしかない時存在する時、編集エラー
+  validate :started_only_error
   
+  
+  # original
   def finished_at_is_invalid_without_a_started_at
     errors.add(:started_at, "が必要です") if started_at.blank? && finished_at.present?
   end
+  
+ 
+  
+  
+  
+  # add
+  def started_only_error
+   errors.add(:finished_at, "が必要です") if started_at.present? && finished_at.blank?
+  end
+  
+  
   
  
   def started_at_than_finished_at_fast_if_invalid
@@ -27,11 +42,7 @@ class Attendance < ApplicationRecord
     end
   end
   
-  # def no_touch
-  #   if Date.current<Date
-  #     errors.add(:started_at, "より早い退勤時間は無効です") if started_at > finished_at
-  #   end
-  # end
+ 
   
   
 end
